@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Video Player</title>
+        <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+        <script
+            src="https://kit.fontawesome.com/6ade36b36a.js"
+            crossorigin="anonymous"
+            defer
+        ></script>
+    </head>
+    <body>
+        <div id="videoContainer">
+            <video
+                width="700px"
+                src="https://serranoarevalo.github.io/notflix/9bfd1023900e31286103369c803c7ee9.ogv"
+            ></video>
+            <div>
+                <button id="play">Play</button>
+                <button id="backward">
+                    <i class="fas fa-backward"></i>
+                </button>
+                <button id="forward">
+                    <i class="fas fa-forward"></i>
+                </button>
+                <button id="mute">Mute</button>
+                <button id="fullScreen">Full Screen</button>
+                <br />
+                <button><i class="fas fa-headphones"></i></button>
+                <input
+                    type="range"
+                    ,
+                    step="0.1"
+                    ,
+                    min="0"
+                    ,
+                    max="1"
+                    ,
+                    id="volume"
+                />
+                <button><i class="fas fa-play"></i></button>
+                <span id="currentTime"></span>
+                <span id="totalTime"></span>
+                <input type="range" step="1" value="0" min="0" id="time" />
+            </div>
+        </div>
+        <script src="./src/index.js"></script>
+    </body>
+</html>
