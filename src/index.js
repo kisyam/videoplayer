@@ -143,4 +143,4 @@ fullScreenBtn.addEventListener("click", handleFullScreen);
 video.addEventListener("dblclick", handleFullScreen);
 forward.addEventListener("click", handleForwardTimeUpdate);
 backward.addEventListener("click", handleBackwardTimeUpdate);
-document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("keyup", handleKeyDown);
