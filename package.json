@@ -11,5 +11,8 @@
     "devDependencies": {
         "@babel/core": "^7.21.0",
         "parcel-bundler": "^1.12.5"
+    },
+    "dependencies": {
+        "regenerator-runtime": "^0.13.11"
     }
 }

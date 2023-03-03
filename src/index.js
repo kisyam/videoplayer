@@ -9,9 +9,15 @@ const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const forward = document.getElementById("forward");
 const backward = document.getElementById("backward");
+const startBtn = document.getElementById("startBtn");
+const audio = document.getElementById("preview");
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
+let stream;
+let recorder;
+let audioFile;
+let timer;
 
 const handlePlay = (e) => {
     if (video.paused) {
@@ -123,6 +129,58 @@ const handleTimelineChange = (event) => {
     video.currentTime = value;
 };
 
+const handleDownload = () => {
+    const a = document.createElement("a");
+    a.href = audioFile;
+    a.download = "MyRecording.mp3";
+    document.body.appendChild(a);
+    a.click();
+    startBtn.disabled = false;
+    startBtn.innerText = "Record Again";
+    startBtn.removeEventListener("click", handleDownload);
+    startBtn.addEventListener("click", handleStart);
+};
+
+const handleStop = () => {
+    startBtn.innerText = "Download Recording";
+    startBtn.removeEventListener("click", handleStop);
+    startBtn.addEventListener("click", handleDownload);
+
+    recorder.stop();
+    clearTimeout(timer);
+};
+
+const handleStart = () => {
+    startBtn.innerText = "Stop Recording";
+    startBtn.removeEventListener("click", handleStart);
+    startBtn.addEventListener("click", handleStop);
+
+    recorder = new MediaRecorder(stream, {
+        mimetype: "audio/webm;codecs=opus",
+    });
+    recorder.ondataavailable = (event) => {
+        audioFile = URL.createObjectURL(event.data);
+        audio.srcObject = null;
+        audio.src = audioFile;
+        audio.play();
+    };
+    recorder.start();
+
+    timer = setTimeout(() => {
+        return handleStop();
+    }, 5000);
+};
+
+const init = async () => {
+    stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false,
+    });
+    audio.srcObject = stream;
+};
+
+init();
+
 if (video.readyState === 4) {
     handleLoadedMetadata();
 } //* totalTime 지연 발생으로 인한 구현
@@ -144,3 +202,4 @@ video.addEventListener("dblclick", handleFullScreen);
 forward.addEventListener("click", handleForwardTimeUpdate);
 backward.addEventListener("click", handleBackwardTimeUpdate);
 document.addEventListener("keyup", handleKeyDown);
+startBtn.addEventListener("click", handleStart);
