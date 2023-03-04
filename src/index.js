@@ -132,7 +132,7 @@ const handleTimelineChange = (event) => {
 const handleDownload = () => {
     const a = document.createElement("a");
     a.href = audioFile;
-    a.download = "MyRecording.mp3";
+    a.download = "MyRecording.webm";
     document.body.appendChild(a);
     a.click();
     startBtn.disabled = false;
